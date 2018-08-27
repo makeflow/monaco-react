@@ -1,0 +1,16 @@
+{
+  "extends": "./node_modules/@magicspace/configs/tsconfig-browser.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+
+    "baseUrl": "src",
+    "rootDir": "src",
+    "outDir": "bld"
+  },
+  "include": ["src"]
+}
