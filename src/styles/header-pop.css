@@ -1,0 +1,55 @@
+.PopBox {
+  background: white;
+  border: 1px solid #c8ccd0;
+}
+
+.HeaderPopItem {
+  padding: 5px 10px 5px 10px;
+}
+
+.PopBody {
+  position: relative;
+}
+
+.PopBody::after,
+.PopBody::before {
+  content: "";
+  position: absolute;
+  border-top: 13px solid transparent;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+}
+.PopBody::after {
+  border-bottom: 10px solid #c8ccd0;
+  bottom: 100%;
+  left: 10px;
+}
+
+.PopBody::before {
+  border-bottom: 10px solid #fff;
+  bottom: calc(100% - 1px);
+  left: 10px;
+  z-index: 1;
+}
+
+.Header1,
+.Header2,
+.Header3,
+.Header4 {
+  color: rgb(94, 109, 130);
+}
+
+.Header1 {
+  font-size: 30px;
+}
+
+.Header2 {
+  font-size: 25px;
+}
+
+.Header3 {
+  font-size: 20px;
+}
+.Header4 {
+  font-size: 15px;
+}
