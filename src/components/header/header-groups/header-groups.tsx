@@ -1,18 +1,18 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 
 import "../../../styles/header-groups.css";
+import { Icon } from "../../common/icon";
 
 interface HeaderGroupsProps {
-  icons: IconProp[];
+  icons: Icon[];
 }
 
 export class HeaderGroups extends React.Component<HeaderGroupsProps> {
   render(): JSX.Element {
-    const icons = this.props.icons.map(icon => (
-      <button className="IconButton">
-        <FontAwesomeIcon icon={icon} />
+    const icons = this.props.icons.map(iconData => (
+      <button className="IconButton" onClick={iconData.handleClick.bind(this)}>
+        <FontAwesomeIcon icon={iconData.body} />
       </button>
     ));
 
