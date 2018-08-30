@@ -24,11 +24,7 @@ import { HeaderGroups } from "./header-groups";
 import { HeaderPop } from "./header-pop/header-pop";
 import { HeaderTabs } from "./header-tabs";
 
-interface HeaderBarProps {
-  handlePreviewClick(): void;
-}
-
-export class HeaderBar extends React.Component<StyleProps & HeaderBarProps> {
+export class HeaderBar extends React.Component<StyleProps> {
   render(): JSX.Element {
     const style = {
       width: Size(this.props.style).width,
@@ -81,7 +77,7 @@ export class HeaderBar extends React.Component<StyleProps & HeaderBarProps> {
           <HeaderGroups icons={funcIcons} />
           <HeaderGroups icons={orderIcons} />
         </div>
-        <div onClick={this.props.handlePreviewClick}>
+        <div>
           <HeaderTabs />
         </div>
         <div className="HeaderPop">
