@@ -16,10 +16,15 @@ highlight.configure({
   ]
 });
 
-export function mark(markdown: string): string {
-  return marked(markdown, {
-    highlight: (code: string): string => {
-      return highlight.highlightAuto(code).value;
-    }
-  });
+let renderer = new marked.Renderer();
+
+marked.setOptions({
+  renderer,
+  highlight: (code: string): string => {
+    return highlight.highlightAuto(code).value;
+  }
+});
+
+export function markdownRender(markdown: string): string {
+  return marked(markdown);
 }
