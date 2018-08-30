@@ -1,6 +1,34 @@
+import { editorPositionInfo } from "../build-service";
+import { editorStore } from "../build-stores";
+
 interface SelectPosition {
   minIndex: number;
   maxIndex: number;
+}
+
+export function createSymbol(
+  attachSymbol: string,
+  attachSymbolCount: number,
+  hasSpace: boolean,
+  spacePosition?: "begin" | "end"
+): string {
+  let replaceText = "";
+
+  for (let i = 0; i < attachSymbolCount; i++) {
+    replaceText += attachSymbol;
+  }
+
+  if (!hasSpace) {
+    return replaceText;
+  }
+
+  if (spacePosition === "begin") {
+    return ` ${replaceText}`;
+  } else if (spacePosition === "end") {
+    return `${replaceText} `;
+  } else {
+    return `${replaceText}`;
+  }
 }
 
 function getSelectPosition(
@@ -49,26 +77,57 @@ export function getSelectText(
   return content.slice(minIndex, maxIndex);
 }
 
-export function replaceSelectText(
-  startIndex: number,
-  endIndex: number,
-  startLine: number,
-  endLine: number,
-  attachSymbol: string,
-  content: string
+function divisionMaxMin(
+  num1: number,
+  num2: number
+): { min: number; max: number } {
+  if (Math.max(num1, num2) === num1) {
+    return { max: num1, min: num2 };
+  } else {
+    return { max: num2, min: num1 };
+  }
+}
+
+function joinContent(symbol: string, content: string, index: number): string {
+  return [
+    content.slice(0, index),
+    symbol,
+    content.slice(index, content.length)
+  ].join("");
+}
+
+export function attachSymbol(
+  leftSymbol: string,
+  rightSymbol: string,
+  isCode?: boolean
 ): string {
-  const { minIndex, maxIndex } = getSelectPosition(
+  let {
     startIndex,
     endIndex,
     startLine,
-    endLine,
-    content
+    endLine
+  } = editorPositionInfo.getAll();
+
+  if (isCode) {
+    rightSymbol = leftSymbol = startLine !== endLine ? "```" : "`";
+  }
+
+  let { max: maxLine, min: minLine } = divisionMaxMin(startLine, endLine);
+  let { max: maxIndex, min: minIndex } = divisionMaxMin(startIndex, endIndex);
+  let content = editorStore.content;
+  let contentParts = content.split("\n");
+
+  contentParts[minLine] = joinContent(
+    leftSymbol,
+    contentParts[minLine],
+    minIndex
   );
 
-  const selectText = content.slice(minIndex, maxIndex);
-
-  return content.replace(
-    selectText,
-    [attachSymbol, selectText, attachSymbol].join("")
+  contentParts[maxLine] = joinContent(
+    rightSymbol,
+    contentParts[maxLine],
+    maxIndex + leftSymbol.length
   );
+
+  return contentParts.join("\n");
 }
