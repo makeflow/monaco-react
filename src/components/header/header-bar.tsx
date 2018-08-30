@@ -16,12 +16,8 @@ import * as React from "react";
 import { editorStore } from "../../build-stores";
 import "../../styles/header-bar.css";
 import "../../styles/row.css";
-import { Size } from "../../utils";
-import {
-  BuildIcon,
-  BuildIcons,
-  BuildNoActionIcons
-} from "../../utils/build-icon";
+import { Size, attachSymbol } from "../../utils";
+import { BuildIcon, BuildIcons } from "../../utils/build-icon";
 import { StyleProps } from "../common/style-props";
 
 import { HeaderGroups } from "./header-groups";
@@ -38,23 +34,45 @@ export class HeaderBar extends React.Component<StyleProps & HeaderBarProps> {
       width: Size(this.props.style).width,
       height: "46px"
     };
-
     const textIcons = BuildIcons([
-      BuildIcon(faHeading, () => {
-        console.info(editorStore.isView);
-        editorStore.isView = !editorStore.isView;
+      BuildIcon(faHeading, () => (editorStore.isView = !editorStore.isView)),
+      BuildIcon(faBold, () => {
+        editorStore.content = attachSymbol("**", "**");
       }),
-      BuildIcon(faBold, () => {}),
-      BuildIcon(faItalic, () => {}),
-      BuildIcon(faStrikethrough, () => {})
+      BuildIcon(faItalic, () => {
+        editorStore.content = attachSymbol("_", "_");
+      }),
+      BuildIcon(faStrikethrough, () => {
+        editorStore.content = attachSymbol("~~", "~~");
+      })
     ]);
-    const funcIcons = BuildNoActionIcons([
-      faLink,
-      faQuoteRight,
-      faCode,
-      faImage
+
+    const funcIcons = BuildIcons([
+      BuildIcon(faLink, () => {
+        editorStore.content = attachSymbol("[", "](url)");
+      }),
+      BuildIcon(faQuoteRight, () => {
+        editorStore.content = attachSymbol("> ", "");
+      }),
+      BuildIcon(faCode, () => {
+        editorStore.content = attachSymbol("", "", true);
+      }),
+      BuildIcon(faImage, () => {
+        editorStore.content = attachSymbol("![", "](image-url)");
+      })
     ]);
-    const orderIcons = BuildNoActionIcons([faListUl, faListOl, faTasks]);
+
+    const orderIcons = BuildIcons([
+      BuildIcon(faListUl, () => {
+        editorStore.content = attachSymbol("- ", "");
+      }),
+      BuildIcon(faListOl, () => {
+        editorStore.content = attachSymbol("1.", "");
+      }),
+      BuildIcon(faTasks, () => {
+        editorStore.content = attachSymbol("-[] ", "");
+      })
+    ]);
 
     return (
       <div className="HeaderBar" style={style}>
