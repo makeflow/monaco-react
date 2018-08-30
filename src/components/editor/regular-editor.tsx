@@ -4,6 +4,7 @@ import MonacoEditor from "react-monaco-editor";
 
 import * as monacoEditor from "monaco-editor";
 
+import { editorPositionInfo } from "../../build-service";
 import { editorStore } from "../../build-stores";
 import { getSelectText } from "../../utils";
 import { mark } from "../../utils/markdown";
@@ -48,18 +49,28 @@ export class RegularEditor extends React.Component<
   ): void {
     editor.onDidChangeCursorSelection(
       (e: monacoEditor.editor.ICursorSelectionChangedEvent) => {
-        editorStore.selectContent = getSelectText(
+        editorPositionInfo.updateAll(
           e.selection.startColumn - 1,
           e.selection.endColumn - 1,
           e.selection.startLineNumber - 1,
-          e.selection.endLineNumber - 1,
+          e.selection.endLineNumber - 1
+        );
+
+        let {
+          startIndex,
+          endIndex,
+          startLine,
+          endLine
+        } = editorPositionInfo.getAll();
+
+        editorStore.selectContent = getSelectText(
+          startIndex,
+          endIndex,
+          startLine,
+          endLine,
           editorStore.content
         );
-        this.props.onChange(
-          e.selection.startColumn,
-          e.selection.endColumn,
-          editorStore.content
-        );
+        this.props.onChange(startIndex, endIndex, editorStore.content);
       }
     );
   }
