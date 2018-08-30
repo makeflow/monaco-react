@@ -9,4 +9,16 @@ export class EditorStore {
 
   @observable
   isView: boolean = false;
+
+  @observable
+  currentView: "diff" | "regular" | "preview" = "regular";
+
+  @observable
+  markdownContent: string = "";
+
+  @observable
+  width: string = "0px";
+
+  @observable
+  height: string = "0px";
 }

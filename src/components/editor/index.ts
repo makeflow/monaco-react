@@ -1,2 +1,2 @@
 export * from "./diff-editor";
-export * from "./regular-editor";
+export * from "./markdown-editor";

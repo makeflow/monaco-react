@@ -4,7 +4,7 @@ import { MonacoDiffEditor } from "react-monaco-editor";
 import { EditorProps } from "../common";
 
 export interface DiffEditorProps extends EditorProps {
-  inline: boolean;
+  inline?: boolean;
   onChange(value: string): void;
 }
 
