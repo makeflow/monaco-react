@@ -64,6 +64,10 @@ export class RegularEditor extends React.Component<
     );
   }
 
+  handleEditorClick(): void {
+    editorStore.isView = false;
+  }
+
   render(): JSX.Element {
     const options: monacoEditor.editor.IEditorConstructionOptions = {
       readOnly: this.props.readonly
@@ -73,24 +77,30 @@ export class RegularEditor extends React.Component<
 
     return (
       <div>
-        <HeaderBar
-          style={this.props.style}
-          handlePreviewClick={this.handlePreviewClick.bind(this)}
-        />
-        <MonacoEditor
-          width={style.width}
-          height={style.height}
-          onChange={this.handleChange.bind(this)}
-          defaultValue={this.props.initialContent}
-          value={editorStore.content}
-          options={Object.assign(
-            {},
-            EditorOption,
-            options,
-            this.props.editorOption
-          )}
-          editorDidMount={this.handleEditorDidMount.bind(this)}
-        />
+        <div>
+          <HeaderBar
+            style={this.props.style}
+            handlePreviewClick={() => this.handlePreviewClick()}
+          />
+        </div>
+        <div onClick={this.handleEditorClick}>
+          <MonacoEditor
+            width={style.width}
+            height={style.height}
+            onChange={(value: string) => this.handleChange(value)}
+            defaultValue={this.props.initialContent}
+            value={editorStore.content}
+            options={Object.assign(
+              {},
+              EditorOption,
+              options,
+              this.props.editorOption
+            )}
+            editorDidMount={(
+              editor: monacoEditor.editor.IStandaloneCodeEditor
+            ) => this.handleEditorDidMount(editor)}
+          />
+        </div>
       </div>
     );
   }

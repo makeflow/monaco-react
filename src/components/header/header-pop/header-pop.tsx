@@ -28,7 +28,8 @@ export class HeaderPop extends React.Component {
       <div className="PopBody">
         {this.headers.map((header, index) => (
           <div
-            onClick={this.handleClick.bind(this)}
+            key={index}
+            onClick={() => this.handleClick()}
             className="HeaderPopItem"
             style={{
               fontSize: this.headerFontSize - index * this.fontSizeIncrement,
