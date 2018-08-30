@@ -6,3 +6,5 @@ export interface Style {
 export interface StyleProps {
   style?: Style;
 }
+
+export type ParsedStyleProps<T> = { [P in keyof T]-?: T[P] };
