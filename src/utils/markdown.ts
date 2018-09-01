@@ -1,5 +1,7 @@
-import * as highlight from "highlight.js";
+import highlight from "highlight.js";
 import marked from "marked";
+
+import "../styles/atom-one-light.css";
 
 highlight.configure({
   tabReplace: "  ",
@@ -12,19 +14,18 @@ highlight.configure({
     "Python",
     "Stylus",
     "TypeScript",
-    "Markdown"
+    "Markdown",
+    "Go"
   ]
 });
 
 let renderer = new marked.Renderer();
 
-marked.setOptions({
-  renderer,
-  highlight: (code: string): string => {
-    return highlight.highlightAuto(code).value;
-  }
-});
-
 export function markdownRender(markdown: string): string {
-  return marked(markdown);
+  return marked(markdown, {
+    renderer,
+    highlight: (code: string) => {
+      return highlight.highlightAuto(code).value;
+    }
+  });
 }
