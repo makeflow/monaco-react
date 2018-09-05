@@ -16,7 +16,7 @@ export class HeaderGroups extends React.Component<HeaderGroupsProps> {
         key={index}
         onClick={() => iconData.handleClick()}
       >
-        <FontAwesomeIcon icon={iconData.body} />
+        <FontAwesomeIcon className="Icon" icon={iconData.body} />
       </button>
     ));
 

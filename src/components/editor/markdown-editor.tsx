@@ -31,6 +31,8 @@ export class MarkDownEditor extends React.Component<
     this.state = {
       value: this.props.initialContent
     };
+
+    editorStore.currentView = this.props.mode || "regular";
   }
 
   handleEditorClick(): void {

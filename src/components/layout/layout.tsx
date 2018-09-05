@@ -29,7 +29,11 @@ export class Layout extends React.Component<
     editorStore.content = value;
   }
 
-  handleEditorDidMount(
+  handleDiffEditorDidMount(_: monacoEditor.editor.IStandaloneDiffEditor): void {
+    console.info("editor");
+  }
+
+  handleRegularEditorDidMount(
     editor: monacoEditor.editor.IStandaloneCodeEditor
   ): void {
     editor.onDidChangeCursorSelection(
@@ -81,8 +85,8 @@ export class Layout extends React.Component<
         <MonacoDiffEditor
           width={style.width}
           height={style.height}
-          defaultValue={this.props.initialContent}
-          onChange={(value: string) => this.props.onChange(value)}
+          value={editorStore.content}
+          original={"Hello"}
           options={editorOptions}
         />
       );
@@ -96,7 +100,7 @@ export class Layout extends React.Component<
           value={editorStore.content}
           options={editorOptions}
           editorDidMount={(editor: monacoEditor.editor.IStandaloneCodeEditor) =>
-            this.handleEditorDidMount(editor)
+            this.handleRegularEditorDidMount(editor)
           }
         />
       );
