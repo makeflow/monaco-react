@@ -14,33 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { editorStore } from "../../build-stores";
-import { XTypeof, attachSymbol } from "../../utils";
 
-import { BothSideSymbol, Clicker, Icon, IconDatas } from "./icon-type";
-
-export function buildIcon(
-  icon: IconProp,
-  target: BothSideSymbol | Clicker,
-  isCode?: boolean
-): Icon {
-  let clicker: ((e?: Event) => void) | undefined;
-
-  if (XTypeof<Clicker>(target, "Function")) {
-    clicker = target;
-  } else {
-    clicker = () =>
-      (editorStore.content = attachSymbol(
-        target.leftSymbol,
-        target.rightSymbol,
-        isCode
-      ));
-  }
-
-  return {
-    body: icon,
-    handleClick: clicker
-  };
-}
+import { IconDatas } from "./icon-type";
 
 export const iconConfigs: IconDatas = {
   textGroup: [

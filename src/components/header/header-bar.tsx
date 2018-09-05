@@ -2,8 +2,8 @@ import * as React from "react";
 
 import "../../styles/header-bar.css";
 import "../../styles/row.css";
-import { Size } from "../../utils";
-import { Icon, IconData, buildIcon, iconConfigs } from "../common";
+import { Size, buildIcon } from "../../utils";
+import { Icon, IconData, iconConfigs } from "../common";
 import { StyleProps } from "../common/style-props";
 
 import { HeaderGroups } from "./header-groups";
