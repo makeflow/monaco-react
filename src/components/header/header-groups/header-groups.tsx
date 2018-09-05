@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 
 import "../../../styles/header-groups.css";
-import { Icon } from "../../common/icon";
+import { Icon } from "../../common/icon-type";
 
 interface HeaderGroupsProps {
   icons: Icon[];
